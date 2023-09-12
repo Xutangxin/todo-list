@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-const emit = defineEmits(['check']);
+import { onMounted } from 'vue';
+const emit = defineEmits(['check', 'delete']);
 
 defineProps({
   todo: Object
@@ -22,7 +22,7 @@ defineProps({
 onMounted(() => {});
 
 const onChange = (val) => {
-  emit('check', val);
+  // emit('check', val);
 };
 </script>
 

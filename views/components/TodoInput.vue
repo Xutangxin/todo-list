@@ -29,9 +29,9 @@ const submit = () => {
   font-size: 16px;
   margin-bottom: 16px;
   .el-input {
-    width: 300px;
+    width: 400px;
     margin-right: 8px;
-    ::v-deep .el-input__inner {
+    :deep(.el-input__inner) {
       height: 42px;
     }
   }
