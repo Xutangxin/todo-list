@@ -28,7 +28,11 @@ const onClick = (val) => {
   margin-bottom: 16px;
   .el-tag {
     margin-right: 16px;
+    padding: 0 12px;
     cursor: pointer;
+    :deep(.el-tag__content) {
+      font-size: 14px;
+    }
   }
 }
 </style>

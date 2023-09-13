@@ -2,28 +2,20 @@
   <div class="todo-item">
     <el-checkbox
       v-model="todo.isDone"
-      @change="onChange"
+      @change="$emit('check')"
       size="large"
       :label="todo.name"
       :class="todo.isDone ? 'done' : ''"
     />
-    <el-tag @click="$emit('delete')" type="danger">delete</el-tag>
+    <el-button @click="$emit('delete')" type="danger" icon="Delete"></el-button>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-const emit = defineEmits(['check', 'delete']);
-
 defineProps({
   todo: Object
 });
-
-onMounted(() => {});
-
-const onChange = (val) => {
-  // emit('check', val);
-};
+defineEmits(['check', 'delete']);
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +29,7 @@ const onChange = (val) => {
   border-radius: 6px;
   text-align: center;
   &:hover {
-    .el-tag {
+    .el-button {
       visibility: visible;
     }
   }
@@ -53,7 +45,8 @@ const onChange = (val) => {
       }
     }
   }
-  .el-tag {
+  .el-button {
+    padding: 8px;
     visibility: hidden;
     cursor: pointer;
   }

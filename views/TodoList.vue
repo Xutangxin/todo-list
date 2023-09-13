@@ -9,18 +9,31 @@
         :key="index"
         :todo="item"
         @delete="onDelete(index)"
+        @check="onCheck(index)"
       ></todo-item>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoFilter from './components/TodoFilter.vue';
 import TodoItem from './components/TodoItem.vue';
+
 const list = ref([]);
-const originList = ref([...list.value]);
+const originList = ref([]);
+
+const syncOriginList = () => {
+  originList.value = JSON.parse(JSON.stringify(list.value));
+};
+
+const getHistory = () => {
+  const todo = JSON.parse(localStorage.getItem('todo'));
+  list.value = todo;
+  syncOriginList();
+};
+getHistory();
 
 const onSubmit = (val) => {
   const data = {
@@ -28,12 +41,12 @@ const onSubmit = (val) => {
     isDone: false
   };
   list.value.unshift(data);
-  originList.value.unshift(data);
+  syncOriginList();
 };
 
 const onDelete = (index) => {
   list.value.splice(index, 1);
-  originList.value.splice(index, 1);
+  syncOriginList();
 };
 
 const onChange = (val) => {
@@ -45,6 +58,21 @@ const onChange = (val) => {
     list.value = originList.value.filter((i) => i.isDone);
   }
 };
+
+const onCheck = () => {
+  syncOriginList();
+};
+
+watch(
+  list.value,
+  (val) => {
+    localStorage.setItem('todo', JSON.stringify(val));
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+);
 </script>
 
 <style lang="scss" scoped>
